@@ -1,19 +1,26 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOP CLASS SUBLIMATION</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body,html{font-family:'Sarabun',sans-serif;}
+body{font-family:'Sarabun',sans-serif;background:#f0f6ff;min-height:100vh;}
 :root{
   --bg:#f0f6ff;--bg2:#ffffff;--bg3:#e3eeff;
   --blue:#1a6fd4;--blue2:#0e4fa8;--blue-light:#dbeafe;--blue-mid:#93c5fd;
   --text:#0f2a5e;--text2:#3b5998;--text3:#6b7eb8;
   --border:#c3d6f5;--border2:#a0bce8;
   --red:#dc2626;--red-bg:#fef2f2;--red-border:#fca5a5;
-  --green:#16a34a;--green-bg:#f0fdf4;--green-border:#86efac;
+  --green:#16a34a;--green-bg:#f0fdf4;
   --orange:#ea580c;--orange-bg:#fff7ed;--orange-border:#fdba74;
   --yellow:#d97706;
   --purple:#7c3aed;--purple-bg:#f5f3ff;--purple-border:#c4b5fd;
   --teal:#0f766e;--teal-bg:#f0fdfa;--teal-border:#5eead4;
 }
-.app{background:var(--bg);min-height:100vh;}
 .login-screen{background:var(--bg);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-card{background:var(--bg2);border:1.5px solid var(--border2);border-radius:20px;padding:40px;width:400px;max-width:100%;}
 .login-logo{display:flex;align-items:center;gap:14px;margin-bottom:32px;justify-content:center;}
@@ -30,13 +37,15 @@ body,html{font-family:'Sarabun',sans-serif;}
 .guest-btn{width:100%;background:transparent;color:var(--text3);border:1.5px solid var(--border);padding:11px;border-radius:9px;font-size:13px;font-family:'Sarabun',sans-serif;cursor:pointer;margin-top:10px;}
 .guest-btn:hover{border-color:var(--blue);color:var(--blue);}
 .db{background:var(--bg);min-height:100vh;padding:18px;display:none;}
-.topbar{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.topbar{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
 .logo-area{display:flex;align-items:center;gap:11px;}
 .logo-icon-img{width:44px;height:44px;border-radius:10px;object-fit:cover;}
 .title-block h1{font-size:16px;font-weight:800;color:var(--blue2);}
 .title-block p{font-size:11px;color:var(--text3);}
 .hright{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .dt-chip{background:var(--blue-light);border:1px solid var(--blue-mid);padding:6px 12px;border-radius:8px;font-size:11px;color:var(--blue2);font-weight:600;}
+.sync-chip{background:#f0fdf4;border:1px solid #86efac;padding:5px 10px;border-radius:8px;font-size:11px;color:#16a34a;font-weight:600;}
+.sync-chip.err{background:var(--red-bg);border-color:var(--red-border);color:var(--red);}
 .user-badge{display:flex;align-items:center;gap:7px;background:var(--bg3);border:1px solid var(--border);padding:6px 12px;border-radius:8px;}
 .udot{width:8px;height:8px;border-radius:50%;}
 .uname{font-size:12px;color:var(--text);font-weight:700;}
@@ -45,7 +54,6 @@ body,html{font-family:'Sarabun',sans-serif;}
 .btn-new:hover{background:var(--blue2);}
 .btn-new:disabled{background:#c3d6f5;color:#6b7eb8;cursor:not-allowed;}
 .btn-logout{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);padding:7px 13px;border-radius:8px;font-size:12px;font-family:'Sarabun',sans-serif;cursor:pointer;font-weight:600;}
-.btn-logout:hover{background:#fee2e2;}
 .ro-banner{background:#fffbeb;border:1px solid #fcd34d;border-radius:10px;padding:10px 16px;margin-bottom:12px;font-size:12px;color:#92400e;display:none;align-items:center;gap:8px;font-weight:600;}
 .stats{display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin-bottom:14px;}
 .scard{background:var(--bg2);border:1.5px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:border-color .15s,background .15s;}
@@ -59,10 +67,8 @@ body,html{font-family:'Sarabun',sans-serif;}
 .sbox:focus{border-color:var(--blue);background:#fff;}
 .sbox::placeholder{color:var(--text3);}
 .selbox{background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);font-size:12px;font-family:'Sarabun',sans-serif;outline:none;cursor:pointer;font-weight:600;}
-.selbox:focus{border-color:var(--blue);}
 .selbox.month-sel{border-color:var(--blue-mid);color:var(--blue2);}
 .btn-cl{background:var(--bg3);border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text3);font-size:12px;font-family:'Sarabun',sans-serif;cursor:pointer;}
-.btn-cl:hover{border-color:var(--blue);color:var(--blue);}
 .table-wrap{background:var(--bg2);border-radius:14px;border:1px solid var(--border);overflow:hidden;}
 .thead-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1.5px solid var(--border);background:var(--bg3);}
 .ttitle{font-size:14px;font-weight:800;color:var(--blue2);}
@@ -87,7 +93,7 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .s-แก้ไขแบบ{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-border);}
 .s-สรุปแบบ{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-border);}
 .s-ส่งผลิต{background:#eff6ff;color:#1d4ed8;border-color:#93c5fd;}
-.s-กำลังเย็บ{background:var(--green-bg);color:var(--green);border-color:var(--green-border);}
+.s-กำลังเย็บ{background:var(--green-bg);color:var(--green);border-color:#86efac;}
 .s-รอซ่อม{background:var(--red-bg);color:var(--red);border-color:var(--red-border);}
 .s-จัดส่งสำเร็จ{background:#f0fdf4;color:#14532d;border-color:#86efac;}
 .s-ยังไม่ได้รับสินค้า{background:var(--orange-bg);color:var(--orange);border-color:var(--orange-border);}
@@ -104,7 +110,6 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .pbs{display:flex;gap:5px;}
 .pb{width:30px;height:30px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text2);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:600;}
 .pb.act{background:var(--blue);border-color:var(--blue);color:white;}
-.pb:hover:not(.act){border-color:var(--blue);color:var(--blue);}
 .summary-bar{background:var(--bg2);border:1.5px solid var(--blue-mid);border-radius:12px;padding:14px 20px;margin-top:12px;display:none;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .summary-bar.show{display:flex;}
 .sum-block{display:flex;flex-direction:column;align-items:center;gap:2px;}
@@ -130,7 +135,6 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .macts{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
 .bcm{background:var(--bg3);border:1.5px solid var(--border);color:var(--text2);padding:8px 16px;border-radius:7px;font-size:13px;font-family:'Sarabun',sans-serif;cursor:pointer;font-weight:600;}
 .bsm{background:var(--blue);border:none;color:white;padding:8px 20px;border-radius:7px;font-size:13px;font-family:'Sarabun',sans-serif;cursor:pointer;font-weight:700;}
-.bsm:hover{background:var(--blue2);}
 .urgent-toggle{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff5f5;border:1.5px solid #fca5a5;border-radius:9px;cursor:pointer;margin-bottom:8px;}
 .urgent-toggle input{width:18px;height:18px;cursor:pointer;accent-color:#dc2626;}
 .urgent-toggle span{font-size:13px;font-weight:700;color:#dc2626;}
@@ -142,9 +146,13 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .drk{font-size:10px;color:var(--text3);margin-bottom:2px;font-weight:700;}
 .drv{font-size:12px;color:var(--text);font-weight:600;}
 .cbtn{float:right;background:none;border:none;color:var(--text3);font-size:22px;cursor:pointer;line-height:1;}
+.loading{display:flex;align-items:center;justify-content:center;padding:40px;gap:12px;color:var(--text3);font-size:14px;}
+.spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<div class="app">
+</head>
+<body>
+
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">
@@ -160,6 +168,7 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
     <button class="guest-btn" onclick="doGuest()">👁 เข้าดูข้อมูลแบบ Guest</button>
   </div>
 </div>
+
 <div class="db" id="dashboard">
   <div class="topbar">
     <div class="logo-area">
@@ -168,6 +177,7 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
     </div>
     <div class="hright">
       <div class="dt-chip" id="clock">—</div>
+      <div class="sync-chip" id="syncChip">● เชื่อมต่อ Supabase</div>
       <div class="user-badge">
         <div class="udot" id="uDot"></div>
         <div><div class="uname" id="uName">—</div><div class="urole" id="uRole">—</div></div>
@@ -202,17 +212,8 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
   </div>
   <div class="table-wrap">
     <div class="thead-row"><span class="ttitle">รายการออเดอร์</span><span class="tcount" id="dCount">—</span></div>
-    <div class="tscroll">
-      <table>
-        <thead><tr>
-          <th>รหัส</th><th>วันรับงาน</th><th>ลูกค้า / แบรนด์</th><th>จังหวัด</th><th>ตัวแทน</th>
-          <th>สินค้า / สี</th><th>ชนิดผ้า</th><th>คอเสื้อ</th><th>ไซส์เสื้อ</th>
-          <th>แขนยาว</th><th>ไซส์พิเศษ</th><th>กางเกง</th><th>เครื่องพิมพ์</th>
-          <th>กราฟฟิก (ออกแบบ)</th><th>กราฟฟิก (วางผลิต)</th>
-          <th>รวม</th><th>ราคา (บาท)</th><th>กำหนดส่ง</th><th>สถานะ</th><th>จัดการ</th>
-        </tr></thead>
-        <tbody id="oTable"></tbody>
-      </table>
+    <div class="tscroll" id="tableArea">
+      <div class="loading"><div class="spinner"></div>กำลังโหลดข้อมูลจาก Supabase...</div>
     </div>
     <div class="pgn"><span class="pi" id="pInfo">หน้า 1 / 1</span><div class="pbs" id="pBtns"></div></div>
   </div>
@@ -228,7 +229,7 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
     <div class="sum-block"><div class="sum-label">⚡ ออเดอร์เร่งด่วน</div><div class="sum-val red" id="sumUrgent">0</div></div>
   </div>
 </div>
-</div>
+
 <div class="mov" id="addModal">
   <div class="mbox">
     <h2 id="mTitle">เพิ่มออเดอร์ใหม่</h2>
@@ -282,9 +283,10 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
       </select>
     </div>
     <label class="urgent-toggle" style="margin-top:4px;"><input type="checkbox" id="f_urgent"><span>⚡ เร่งด่วน</span><small>— แถวจะแสดงพื้นสีแดงและมีป้ายกำกับ</small></label>
-    <div class="macts"><button class="bcm" onclick="cm()">ยกเลิก</button><button class="bsm" onclick="sv()">💾 บันทึก</button></div>
+    <div class="macts"><button class="bcm" onclick="cm()">ยกเลิก</button><button class="bsm" id="btnSave" onclick="sv()">💾 บันทึก</button></div>
   </div>
 </div>
+
 <div class="mov" id="detModal">
   <div class="dbox">
     <button class="cbtn" onclick="document.getElementById('detModal').classList.remove('open')">×</button>
@@ -293,43 +295,230 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
     <div style="margin-top:18px;text-align:right;"><button class="bcm" onclick="document.getElementById('detModal').classList.remove('open')">ปิด</button></div>
   </div>
 </div>
+
 <script>
-const USERS=[{id:'ceoTOP00',pw:'00000000',role:'CEO',color:'#d97706'},{id:'ceoTOP01',pw:'00001111',role:'CEO',color:'#d97706'},{id:'ceoTOP289',pw:'428965',role:'CEO',color:'#d97706'},{id:'AdminTOP00',pw:'00000000',role:'Admin',color:'#1a6fd4'},{id:'AdminTOP01',pw:'00001111',role:'Admin',color:'#1a6fd4'}];
+const SUPA_URL = 'https://rycjohhdgvmwzpdqhtrk.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5Y2pvaGhkZ3Ztd3pwZHFodHJrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxOTE1ODYsImV4cCI6MjA5NDc2NzU4Nn0.kC8aQStzL6oV-w671RA3V5rIYO-WALZuP03C3qZjEKA';
+const db = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
+const USERS=[
+  {id:'ceoTOP00',pw:'00000000',role:'CEO',color:'#d97706'},
+  {id:'ceoTOP01',pw:'00001111',role:'CEO',color:'#d97706'},
+  {id:'ceoTOP289',pw:'428965',role:'CEO',color:'#d97706'},
+  {id:'AdminTOP00',pw:'00000000',role:'Admin',color:'#1a6fd4'},
+  {id:'AdminTOP01',pw:'00001111',role:'Admin',color:'#1a6fd4'},
+];
 const MFULL=['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
-let CU=null,isGuest=false;
-function canEdit(){return CU!==null&&!isGuest;}
-function doLogin(){const id=document.getElementById('li_id').value.trim(),pw=document.getElementById('li_pw').value;const u=USERS.find(x=>x.id===id&&x.pw===pw);if(!u){document.getElementById('loginErr').style.display='block';return;}document.getElementById('loginErr').style.display='none';CU=u;isGuest=false;showDB();}
-function doGuest(){CU=null;isGuest=true;showDB();}
-function doLogout(){CU=null;isGuest=false;document.getElementById('dashboard').style.display='none';document.getElementById('loginScreen').style.display='flex';document.getElementById('li_id').value='';document.getElementById('li_pw').value='';}
-function showDB(){document.getElementById('loginScreen').style.display='none';document.getElementById('dashboard').style.display='block';if(isGuest){document.getElementById('uDot').style.background='#94a3b8';document.getElementById('uName').textContent='Guest';document.getElementById('uRole').textContent='ดูข้อมูลเท่านั้น';document.getElementById('roBanner').style.display='flex';document.getElementById('btnNew').disabled=true;}else{document.getElementById('uDot').style.background=CU.color;document.getElementById('uName').textContent=CU.id;document.getElementById('uRole').textContent=CU.role;document.getElementById('roBanner').style.display='none';document.getElementById('btnNew').disabled=false;}render();}
 const ST=['รอแบบ','แก้ไขแบบ','สรุปแบบ','ส่งผลิต','กำลังเย็บ','รอซ่อม','จัดส่งสำเร็จ','ยังไม่ได้รับสินค้า'];
 const SDOTS=['#378add','#7c3aed','#0f766e','#1d4ed8','#16a34a','#dc2626','#14532d','#ea580c'];
-const PER=5;let pg=1,ei=-1;
-let O=[{id:'ORD-2025-008',rd:'2025-05-01',ag:'สมชาย ใจดี',cu:'คณะแพทยศาสตร์',br:'MedFac',pv:'กรุงเทพฯ',pr:'Scrub Top',co:'Cell Blue',fb:'Polyester',ls:false,ss:false,sz:[{s:'S',q:10},{s:'M',q:15},{s:'L',q:10}],cl:'คอกลม',pt:'',ps:'ไม่มี',pn:'Epson F3070',gd:'นภา',gp:'วิชัย',qt:35,px:5500,du:'2025-05-30',st:'รอแบบ',urgent:false},{id:'ORD-2025-007',rd:'2025-05-05',ag:'วิไล รักงาน',cu:'ออฟฟิศ ดิจิทัล โซลูชัน',br:'DigitalSol',pv:'เชียงใหม่',pr:'Corporate Polo',co:'Steel Blue',fb:'Cotton 100%',ls:true,ss:true,sz:[{s:'S',q:5},{s:'M',q:20},{s:'L',q:25},{s:'XL',q:15},{s:'2XL',q:5}],cl:'คอโปโล',pt:'30:15, 32:20',ps:'ไม่มี',pn:'Brother GTX Pro',gd:'ปราง',gp:'ปราง',qt:70,px:12300,du:'2025-06-15',st:'แก้ไขแบบ',urgent:true},{id:'ORD-2025-006',rd:'2025-04-20',ag:'สมชาย ใจดี',cu:'ทีมกีฬาโรงเรียน',br:'SchoolTeam',pv:'ขอนแก่น',pr:'Short Sleeve Jersey',co:'Cerulean',fb:'Dri-Fit',ls:false,ss:false,sz:[{s:'S',q:15},{s:'M',q:30},{s:'L',q:25},{s:'XL',q:10}],cl:'คอกลม',pt:'28:20, 30:25, 32:15',ps:'ไม่มี',pn:'Epson F3070',gd:'วิชัย',gp:'วิชัย',qt:80,px:8400,du:'2025-05-25',st:'จัดส่งสำเร็จ',urgent:false},{id:'ORD-2025-005',rd:'2025-04-10',ag:'อรุณ พัฒนา',cu:'มหาวิทยาลัยเทคโนโลยีฯ',br:'UniTech',pv:'นครราชสีมา',pr:'Polo Long Sleeve',co:'Sky Blue',fb:'Cotton Pique',ls:true,ss:true,sz:[{s:'S',q:100},{s:'M',q:200},{s:'L',q:150},{s:'XL',q:80},{s:'2XL',q:30}],cl:'คอโปโล',pt:'',ps:'ไม่มี',pn:'Kornit Atlas',gd:'นภา',gp:'ปราง',qt:560,px:67500,du:'2025-07-01',st:'กำลังเย็บ',urgent:false},{id:'ORD-2025-004',rd:'2025-04-05',ag:'วิไล รักงาน',cu:'ห้างสรรพสินค้าบลู',br:'BlueMall',pv:'ภูเก็ต',pr:'Hoodie Zip',co:'Denim Blue',fb:'French Terry',ls:true,ss:false,sz:[{s:'M',q:20},{s:'L',q:30},{s:'XL',q:20}],cl:'คอฮูด',pt:'',ps:'ไม่มี',pn:'Epson F3070',gd:'ปราง',gp:'วิชัย',qt:70,px:9800,du:'2025-05-08',st:'รอซ่อม',urgent:true},{id:'ORD-2025-003',rd:'2025-03-28',ag:'อรุณ พัฒนา',cu:'สโมสรฟุตบอลเมือง',br:'CityFC',pv:'สงขลา',pr:'Jersey Full Print',co:'Midnight Blue',fb:'Sublimation',ls:false,ss:true,sz:[{s:'XS',q:5},{s:'S',q:10},{s:'M',q:25},{s:'L',q:35},{s:'XL',q:40},{s:'2XL',q:20},{s:'3XL',q:5}],cl:'คอวี',pt:'28:30, 30:50, 32:40, 34:20',ps:'มี',pn:'Mimaki TS100',gd:'วิชัย',gp:'นภา',qt:140,px:42000,du:'2025-06-01',st:'ส่งผลิต',urgent:false},{id:'ORD-2025-002',rd:'2025-03-15',ag:'สมชาย ใจดี',cu:'บริษัท สตาร์ทอัพ จำกัด',br:'StartupCo',pv:'กรุงเทพฯ',pr:'T-Shirt Basic',co:'Navy Blue',fb:'Cotton 160g',ls:false,ss:false,sz:[{s:'S',q:20},{s:'M',q:30},{s:'L',q:20}],cl:'คอกลม',pt:'',ps:'ไม่มี',pn:'Brother GTX Pro',gd:'ปราง',gp:'ปราง',qt:70,px:7000,du:'2025-06-20',st:'สรุปแบบ',urgent:false},{id:'ORD-2025-001',rd:'2025-03-01',ag:'วิไล รักงาน',cu:'สโมสรวิ่งมาราธอน',br:'RunClub',pv:'เชียงราย',pr:'Running Shirt',co:'Electric Blue',fb:'Dri-Fit',ls:false,ss:false,sz:[{s:'S',q:25},{s:'M',q:40},{s:'L',q:20}],cl:'คอกลม',pt:'',ps:'ไม่มี',pn:'Epson F3070',gd:'นภา',gp:'วิชัย',qt:85,px:11200,du:'2025-05-15',st:'ยังไม่ได้รับสินค้า',urgent:false}];
-function fd(d){if(!d)return'-';const p=d.split('-');if(p.length!==3)return d;const m=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];return`${parseInt(p[2])} ${m[parseInt(p[1])-1]} ${parseInt(p[0])+543}`;}
+const PER=5;
+let CU=null,isGuest=false,O=[],pg=1,ei=-1;
+
+function canEdit(){return CU!==null&&!isGuest;}
+
+async function loadOrders(){
+  document.getElementById('tableArea').innerHTML='<div class="loading"><div class="spinner"></div>กำลังโหลดข้อมูล...</div>';
+  const {data,error}=await db.from('orders').select('*').order('created_at',{ascending:false});
+  if(error){
+    document.getElementById('syncChip').textContent='● ไม่สามารถเชื่อมต่อ';
+    document.getElementById('syncChip').className='sync-chip err';
+    document.getElementById('tableArea').innerHTML='<div class="loading" style="color:#dc2626;">โหลดข้อมูลไม่สำเร็จ: '+error.message+'</div>';
+    return;
+  }
+  O=data||[];
+  document.getElementById('syncChip').textContent='● Supabase (' + O.length + ' รายการ)';
+  render();
+}
+
+async function saveToSupabase(o){
+  const row={
+    id:o.id, rd:o.rd||null, ag:o.ag, cu:o.cu, br:o.br, pv:o.pv,
+    pr:o.pr, co:o.co, fb:o.fb, ls:o.ls, ss:o.ss,
+    sz:o.sz, cl:o.cl, pt:o.pt, ps:o.ps, pn:o.pn,
+    gd:o.gd, gp:o.gp, qt:o.qt, px:o.px,
+    du:o.du||null, st:o.st, urgent:o.urgent
+  };
+  if(ei>=0){
+    const {error}=await db.from('orders').update(row).eq('id',o.id);
+    if(error){alert('บันทึกไม่สำเร็จ: '+error.message);return false;}
+  }else{
+    const {error}=await db.from('orders').insert(row);
+    if(error){alert('เพิ่มไม่สำเร็จ: '+error.message);return false;}
+  }
+  return true;
+}
+
+async function deleteFromSupabase(id){
+  const {error}=await db.from('orders').delete().eq('id',id);
+  if(error){alert('ลบไม่สำเร็จ: '+error.message);return false;}
+  return true;
+}
+
+function doLogin(){
+  const id=document.getElementById('li_id').value.trim(),pw=document.getElementById('li_pw').value;
+  const u=USERS.find(x=>x.id===id&&x.pw===pw);
+  if(!u){document.getElementById('loginErr').style.display='block';return;}
+  document.getElementById('loginErr').style.display='none';CU=u;isGuest=false;showDB();
+}
+function doGuest(){CU=null;isGuest=true;showDB();}
+function doLogout(){CU=null;isGuest=false;document.getElementById('dashboard').style.display='none';document.getElementById('loginScreen').style.display='flex';}
+function showDB(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  if(isGuest){document.getElementById('uDot').style.background='#94a3b8';document.getElementById('uName').textContent='Guest';document.getElementById('uRole').textContent='ดูข้อมูลเท่านั้น';document.getElementById('roBanner').style.display='flex';document.getElementById('btnNew').disabled=true;}
+  else{document.getElementById('uDot').style.background=CU.color;document.getElementById('uName').textContent=CU.id;document.getElementById('uRole').textContent=CU.role;document.getElementById('roBanner').style.display='none';document.getElementById('btnNew').disabled=false;}
+  loadOrders();
+}
+
+function fd(d){if(!d)return'-';try{const p=d.substr?d.substr(0,10):d;const parts=p.split('-');const m=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];return`${parseInt(parts[2])} ${m[parseInt(parts[1])-1]} ${parseInt(parts[0])+543}`;}catch{return d;}}
 function pss(str){if(!str)return[];return str.split(',').map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split(':');return{s:p[0]?.trim()||'',q:parseInt(p[1])||0}}).filter(x=>x.s);}
-function s2s(a){if(!a||!a.length)return'';return a.map(x=>x.s+':'+x.q).join(', ');}
-function stags(a){if(!a||!a.length)return'<span style="color:#6b7eb8">—</span>';return`<div class="sztags">${a.map(x=>`<span class="sztag">${x.s}:${x.q}</span>`).join('')}</div>`;}
-function rs(){const c={};ST.forEach(s=>c[s]=0);O.forEach(o=>{if(c[o.st]!==undefined)c[o.st]++;});const t=O.length;let h=`<div class="scard active" onclick="fs('')"><span class="sdot" style="background:#1a6fd4"></span><div class="snum">${t}</div><div class="slabel">ทั้งหมด</div><div class="sbar" style="background:#1a6fd4;width:100%"></div></div>`;ST.forEach((s,i)=>{const pct=t?Math.round(c[s]/t*100):0;h+=`<div class="scard" onclick="fs('${s}')"><span class="sdot" style="background:${SDOTS[i]}"></span><div class="snum">${c[s]}</div><div class="slabel">${s}</div><div class="sbar" style="background:${SDOTS[i]};width:${Math.max(pct,8)}%"></div></div>`;});document.getElementById('sRow').innerHTML=h;}
+function s2s(a){if(!a||!a.length)return'';if(typeof a==='string')return a;return a.map(x=>x.s+':'+x.q).join(', ');}
+function stags(a){if(!a||!a.length)return'<span style="color:#6b7eb8">—</span>';const arr=typeof a==='string'?JSON.parse(a):a;return`<div class="sztags">${arr.map(x=>`<span class="sztag">${x.s}:${x.q}</span>`).join('')}</div>`;}
+function getMonth(d){if(!d)return'';return String(d).substr(5,2);}
+
+function rs(){
+  const c={};ST.forEach(s=>c[s]=0);O.forEach(o=>{if(c[o.st]!==undefined)c[o.st]++;});
+  const t=O.length;
+  let h=`<div class="scard active" onclick="fs('')"><span class="sdot" style="background:#1a6fd4"></span><div class="snum">${t}</div><div class="slabel">ทั้งหมด</div><div class="sbar" style="background:#1a6fd4;width:100%"></div></div>`;
+  ST.forEach((s,i)=>{const pct=t?Math.round(c[s]/t*100):0;h+=`<div class="scard" onclick="fs('${s}')"><span class="sdot" style="background:${SDOTS[i]}"></span><div class="snum">${c[s]}</div><div class="slabel">${s}</div><div class="sbar" style="background:${SDOTS[i]};width:${Math.max(pct,8)}%"></div></div>`;});
+  document.getElementById('sRow').innerHTML=h;
+}
+
 function selMonth(){return document.getElementById('monthFilter').value;}
-function gf(){const q=document.getElementById('sInput').value.toLowerCase();const st=document.getElementById('stFilter').value;const so=document.getElementById('soFilter').value;const mo=selMonth();let r=O.filter(o=>{const mq=!q||[o.id,o.cu,o.br,o.ag,o.pr,o.pv].some(x=>(x||'').toLowerCase().includes(q));const ms=!st||o.st===st;const mm=!mo||(o.rd&&o.rd.split('-')[1]===mo);return mq&&ms&&mm;});r.sort((a,b)=>{if(so==='newest')return b.du.localeCompare(a.du);if(so==='oldest')return a.du.localeCompare(b.du);if(so==='phi')return b.px-a.px;if(so==='plo')return a.px-b.px;return 0;});return r;}
-function updateSummary(filtered){const mo=selMonth();const bar=document.getElementById('summaryBar');if(!mo){bar.classList.remove('show');return;}bar.classList.add('show');document.getElementById('sumMonth').textContent=MFULL[parseInt(mo)];document.getElementById('sumOrders').textContent=filtered.length.toLocaleString();document.getElementById('sumQty').textContent=filtered.reduce((a,o)=>a+o.qt,0).toLocaleString();document.getElementById('sumPrice').textContent=filtered.reduce((a,o)=>a+o.px,0).toLocaleString()+' ฿';document.getElementById('sumUrgent').textContent=filtered.filter(o=>o.urgent).length.toLocaleString();}
-function render(){rs();const f=gf(),t=f.length,tp=Math.max(1,Math.ceil(t/PER));if(pg>tp)pg=tp;const it=f.slice((pg-1)*PER,(pg-1)*PER+PER);const mo=selMonth();document.getElementById('dCount').textContent=mo?`แสดง ${t} รายการ (${MFULL[parseInt(mo)]})`:`แสดง ${t} รายการ`;document.getElementById('pInfo').textContent=`หน้า ${pg} / ${tp}`;updateSummary(f);const ed=canEdit();document.getElementById('oTable').innerHTML=it.map(o=>{const ri=O.indexOf(o);const pd=o.pt?`<div style="font-size:10px;color:#3b5998">${o.pt}</div><div style="font-size:9px;color:${o.ps==='มี'?'#16a34a':'#6b7eb8'};font-weight:700">${o.ps==='มี'?'★ พิเศษ':'—'}</div>`:'<span style="color:#6b7eb8">—</span>';const dis=ed?'':'disabled';const urgBadge=o.urgent?'<span class="urgent-badge">⚡ เร่งด่วน</span>':'';const rowCls=o.urgent?' class="urgent-row"':'';return`<tr${rowCls}><td><span class="oid">${o.id}</span>${o.urgent?'<br><span style="font-size:9px;color:#dc2626;font-weight:800">⚡ เร่งด่วน</span>':''}</td><td style="font-size:11px;color:#3b5998;white-space:nowrap;font-weight:600">${fd(o.rd)}</td><td><div class="cname">${o.cu}</div><span class="btag">${o.br}</span></td><td style="font-size:11px;color:#3b5998;font-weight:600">${o.pv||'—'}</td><td style="font-size:11px;color:#0e4fa8;font-weight:700">${o.ag||'—'}</td><td><div style="font-weight:700;color:#0f2a5e;font-size:12px">${o.pr}</div><div style="font-size:10px;color:#6b7eb8">${o.co}</div></td><td style="font-size:11px;color:#3b5998">${o.fb||'—'}</td><td style="font-size:11px;color:#0e4fa8;font-weight:600">${o.cl||'—'}</td><td>${stags(o.sz)}</td><td><span class="${o.ls?'by':'bn'}">${o.ls?'✓ มี':'—'}</span></td><td><span class="${o.ss?'by':'bn'}">${o.ss?'★ มี':'—'}</span></td><td>${pd}</td><td style="font-size:11px;color:#3b5998">${o.pn||'—'}</td><td style="font-size:11px;color:#7c3aed;font-weight:700">${o.gd||'—'}</td><td style="font-size:11px;color:#0f766e;font-weight:700">${o.gp||'—'}</td><td style="font-weight:800;color:#1a6fd4;font-size:13px">${o.qt.toLocaleString()}</td><td style="font-weight:800;color:#dc2626;font-size:13px">${o.px.toLocaleString()}</td><td style="white-space:nowrap;font-size:11px;color:#d97706;font-weight:700">${fd(o.du)}</td><td><span class="sb s-${o.st}">${o.st}</span>${urgBadge}</td><td><div class="acts"><button class="ab av" onclick="vo(${ri})">👁</button><button class="ab ae" onclick="eo(${ri})" ${dis}>✏️</button><button class="ab ad" onclick="do2(${ri})" ${dis}>🗑</button></div></td></tr>`;}).join('');let b=`<button class="pb" onclick="gp(${pg-1})" ${pg===1?'disabled':''}>‹</button>`;for(let p=1;p<=tp;p++)b+=`<button class="pb ${p===pg?'act':''}" onclick="gp(${p})">${p}</button>`;b+=`<button class="pb" onclick="gp(${pg+1})" ${pg===tp?'disabled':''}>›</button>`;document.getElementById('pBtns').innerHTML=b;}
+function gf(){
+  const q=document.getElementById('sInput').value.toLowerCase();
+  const st=document.getElementById('stFilter').value;
+  const so=document.getElementById('soFilter').value;
+  const mo=selMonth();
+  let r=O.filter(o=>{
+    const mq=!q||[o.id,o.cu,o.br,o.ag,o.pr,o.pv].some(x=>(x||'').toLowerCase().includes(q));
+    const ms=!st||o.st===st;
+    const mm=!mo||getMonth(o.rd)===mo;
+    return mq&&ms&&mm;
+  });
+  r.sort((a,b)=>{if(so==='newest')return (b.du||'').localeCompare(a.du||'');if(so==='oldest')return (a.du||'').localeCompare(b.du||'');if(so==='phi')return b.px-a.px;if(so==='plo')return a.px-b.px;return 0;});
+  return r;
+}
+
+function updateSummary(filtered){
+  const mo=selMonth();const bar=document.getElementById('summaryBar');
+  if(!mo){bar.classList.remove('show');return;}
+  bar.classList.add('show');
+  document.getElementById('sumMonth').textContent=MFULL[parseInt(mo)];
+  document.getElementById('sumOrders').textContent=filtered.length.toLocaleString();
+  document.getElementById('sumQty').textContent=filtered.reduce((a,o)=>a+(o.qt||0),0).toLocaleString();
+  document.getElementById('sumPrice').textContent=filtered.reduce((a,o)=>a+(o.px||0),0).toLocaleString()+' ฿';
+  document.getElementById('sumUrgent').textContent=filtered.filter(o=>o.urgent).length.toLocaleString();
+}
+
+function render(){
+  rs();
+  const f=gf(),t=f.length,tp=Math.max(1,Math.ceil(t/PER));
+  if(pg>tp)pg=tp;
+  const it=f.slice((pg-1)*PER,(pg-1)*PER+PER);
+  const mo=selMonth();
+  document.getElementById('dCount').textContent=mo?`แสดง ${t} รายการ (${MFULL[parseInt(mo)]})`:`แสดง ${t} รายการ`;
+  document.getElementById('pInfo').textContent=`หน้า ${pg} / ${tp}`;
+  updateSummary(f);
+  const ed=canEdit();
+  const tableHtml=`<table><thead><tr>
+    <th>รหัส</th><th>วันรับงาน</th><th>ลูกค้า / แบรนด์</th><th>จังหวัด</th><th>ตัวแทน</th>
+    <th>สินค้า / สี</th><th>ชนิดผ้า</th><th>คอเสื้อ</th><th>ไซส์เสื้อ</th>
+    <th>แขนยาว</th><th>ไซส์พิเศษ</th><th>กางเกง</th><th>เครื่องพิมพ์</th>
+    <th>กราฟฟิก (ออกแบบ)</th><th>กราฟฟิก (วางผลิต)</th>
+    <th>รวม</th><th>ราคา (บาท)</th><th>กำหนดส่ง</th><th>สถานะ</th><th>จัดการ</th>
+  </tr></thead><tbody>${it.map(o=>{
+    const ri=O.indexOf(o);
+    const pd=o.pt?`<div style="font-size:10px;color:#3b5998">${o.pt}</div><div style="font-size:9px;color:${o.ps==='มี'?'#16a34a':'#6b7eb8'};font-weight:700">${o.ps==='มี'?'★ พิเศษ':'—'}</div>`:'<span style="color:#6b7eb8">—</span>';
+    const dis=ed?'':'disabled';
+    const urgBadge=o.urgent?'<span class="urgent-badge">⚡ เร่งด่วน</span>':'';
+    const rowCls=o.urgent?' class="urgent-row"':'';
+    return`<tr${rowCls}>
+      <td><span class="oid">${o.id}</span>${o.urgent?'<br><span style="font-size:9px;color:#dc2626;font-weight:800">⚡</span>':''}</td>
+      <td style="font-size:11px;color:#3b5998;white-space:nowrap;font-weight:600">${fd(o.rd)}</td>
+      <td><div class="cname">${o.cu||'—'}</div><span class="btag">${o.br||'—'}</span></td>
+      <td style="font-size:11px;color:#3b5998">${o.pv||'—'}</td>
+      <td style="font-size:11px;color:#0e4fa8;font-weight:700">${o.ag||'—'}</td>
+      <td><div style="font-weight:700;color:#0f2a5e;font-size:12px">${o.pr||'—'}</div><div style="font-size:10px;color:#6b7eb8">${o.co||''}</div></td>
+      <td style="font-size:11px;color:#3b5998">${o.fb||'—'}</td>
+      <td style="font-size:11px;color:#0e4fa8;font-weight:600">${o.cl||'—'}</td>
+      <td>${stags(o.sz)}</td>
+      <td><span class="${o.ls?'by':'bn'}">${o.ls?'✓ มี':'—'}</span></td>
+      <td><span class="${o.ss?'by':'bn'}">${o.ss?'★ มี':'—'}</span></td>
+      <td>${pd}</td>
+      <td style="font-size:11px;color:#3b5998">${o.pn||'—'}</td>
+      <td style="font-size:11px;color:#7c3aed;font-weight:700">${o.gd||'—'}</td>
+      <td style="font-size:11px;color:#0f766e;font-weight:700">${o.gp||'—'}</td>
+      <td style="font-weight:800;color:#1a6fd4">${(o.qt||0).toLocaleString()}</td>
+      <td style="font-weight:800;color:#dc2626">${(o.px||0).toLocaleString()}</td>
+      <td style="white-space:nowrap;font-size:11px;color:#d97706;font-weight:700">${fd(o.du)}</td>
+      <td><span class="sb s-${o.st}">${o.st}</span>${urgBadge}</td>
+      <td><div class="acts">
+        <button class="ab av" onclick="vo(${ri})">👁</button>
+        <button class="ab ae" onclick="eo(${ri})" ${dis}>✏️</button>
+        <button class="ab ad" onclick="do2(${ri})" ${dis}>🗑</button>
+      </div></td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+  document.getElementById('tableArea').innerHTML=tableHtml;
+  let b=`<button class="pb" onclick="gp(${pg-1})" ${pg===1?'disabled':''}>‹</button>`;
+  for(let p=1;p<=tp;p++)b+=`<button class="pb ${p===pg?'act':''}" onclick="gp(${p})">${p}</button>`;
+  b+=`<button class="pb" onclick="gp(${pg+1})" ${pg===tp?'disabled':''}>›</button>`;
+  document.getElementById('pBtns').innerHTML=b;
+}
+
 function gp(p){const f=gf();const t=Math.max(1,Math.ceil(f.length/PER));if(p<1||p>t)return;pg=p;render();}
 function af(){pg=1;render();}
 function cf(){document.getElementById('sInput').value='';document.getElementById('stFilter').value='';document.getElementById('soFilter').value='newest';document.getElementById('monthFilter').value='';af();}
 function fs(s){document.getElementById('stFilter').value=s;af();}
+
 function sv2(id,val){const el=document.getElementById(id);if(el)el.value=val||'';}
 function sc2(id,val){const el=document.getElementById(id);if(el)el.checked=!!val;}
-function sf(o){sv2('f_id',o.id);sv2('f_rd',o.rd);sv2('f_ag',o.ag);sv2('f_cu',o.cu);sv2('f_br',o.br);sv2('f_pv',o.pv);sv2('f_pr',o.pr);sv2('f_co',o.co);sv2('f_fb',o.fb);sc2('f_ls',o.ls);sc2('f_ss',o.ss);sv2('f_cl',o.cl);sv2('f_sz',s2s(o.sz));sv2('f_pt',o.pt);sv2('f_ps',o.ps||'ไม่มี');sv2('f_pn',o.pn);sv2('f_gd',o.gd);sv2('f_gp',o.gp);sv2('f_qt',o.qt);sv2('f_px',o.px);sv2('f_du',o.du);sv2('f_st',o.st);sc2('f_urgent',o.urgent);}
-function openAdd(){if(!canEdit()){alert('กรุณาล็อกอินก่อนเพิ่มออเดอร์');return;}ei=-1;document.getElementById('mTitle').textContent='เพิ่มออเดอร์ใหม่';sf({ls:false,ss:false,ps:'ไม่มี',st:'รอแบบ',qt:0,px:0,urgent:false});document.getElementById('addModal').classList.add('open');}
-function eo(i){if(!canEdit()){alert('กรุณาล็อกอินก่อนแก้ไข');return;}ei=i;document.getElementById('mTitle').textContent='แก้ไขออเดอร์';sf(O[i]);document.getElementById('addModal').classList.add('open');}
+function sf(o){
+  sv2('f_id',o.id);sv2('f_rd',o.rd?String(o.rd).substr(0,10):'');sv2('f_ag',o.ag);sv2('f_cu',o.cu);sv2('f_br',o.br);sv2('f_pv',o.pv);
+  sv2('f_pr',o.pr);sv2('f_co',o.co);sv2('f_fb',o.fb);sc2('f_ls',o.ls);sc2('f_ss',o.ss);
+  sv2('f_cl',o.cl);sv2('f_sz',s2s(o.sz));sv2('f_pt',o.pt);sv2('f_ps',o.ps||'ไม่มี');
+  sv2('f_pn',o.pn);sv2('f_gd',o.gd);sv2('f_gp',o.gp);
+  sv2('f_qt',o.qt);sv2('f_px',o.px);sv2('f_du',o.du?String(o.du).substr(0,10):'');sv2('f_st',o.st);sc2('f_urgent',o.urgent);
+}
+
+function openAdd(){if(!canEdit()){alert('กรุณาล็อกอินก่อน');return;}ei=-1;document.getElementById('mTitle').textContent='เพิ่มออเดอร์ใหม่';sf({ls:false,ss:false,ps:'ไม่มี',st:'รอแบบ',qt:0,px:0,urgent:false});document.getElementById('addModal').classList.add('open');}
+function eo(i){if(!canEdit()){alert('กรุณาล็อกอินก่อน');return;}ei=i;document.getElementById('mTitle').textContent='แก้ไขออเดอร์';sf(O[i]);document.getElementById('addModal').classList.add('open');}
 function cm(){document.getElementById('addModal').classList.remove('open');}
-function sv(){if(!canEdit())return;const g=id=>document.getElementById(id)?.value?.trim()||'';const gc=id=>document.getElementById(id)?.checked||false;const id=g('f_id'),cu=g('f_cu');if(!id||!cu){alert('กรุณากรอกรหัสออเดอร์และชื่อลูกค้า');return;}const o={id,rd:g('f_rd'),ag:g('f_ag'),cu,br:g('f_br'),pv:g('f_pv'),pr:g('f_pr'),co:g('f_co'),fb:g('f_fb'),ls:gc('f_ls'),ss:gc('f_ss'),cl:g('f_cl'),sz:pss(g('f_sz')),pt:g('f_pt'),ps:g('f_ps'),pn:g('f_pn'),gd:g('f_gd'),gp:g('f_gp'),qt:parseInt(document.getElementById('f_qt').value)||0,px:parseInt(document.getElementById('f_px').value)||0,du:g('f_du'),st:g('f_st'),urgent:gc('f_urgent')};if(ei>=0)O[ei]=o;else O.unshift(o);cm();render();}
-function do2(i){if(!canEdit()){alert('กรุณาล็อกอินก่อนลบ');return;}if(confirm(`ลบออเดอร์ ${O[i].id}?`)){O.splice(i,1);render();}}
-function vo(i){const o=O[i];document.getElementById('dTitle').textContent=o.id+(o.urgent?' ⚡':'')+' — '+o.cu;const rows=[['วันที่รับงาน',fd(o.rd)],['ตัวแทน',o.ag],['ลูกค้า',o.cu],['แบรนด์',o.br],['จังหวัด',o.pv],['สถานะ',`<span class="sb s-${o.st}">${o.st}</span>${o.urgent?'<span class="urgent-badge" style="margin-left:6px">⚡ เร่งด่วน</span>':''}`],['สินค้า',o.pr],['สี',o.co],['ชนิดผ้า',o.fb],['คอเสื้อ',o.cl||'—'],['ไซส์เสื้อ',s2s(o.sz)||'—'],['มีแขนยาว',o.ls?'✓ มี':'—'],['มีไซส์พิเศษ (เสื้อ)',o.ss?'★ มี':'—'],['กางเกง (ไซส์)',o.pt||'—'],['มีไซส์พิเศษ (กางเกง)',o.ps],['เครื่องพิมพ์',o.pn||'—'],['กราฟฟิกออกแบบ',o.gd||'—'],['กราฟฟิกวางผลิต',o.gp||'—'],['จำนวนรวม',o.qt.toLocaleString()+' ตัว'],['ราคา',`<span style="color:#dc2626;font-weight:800">${o.px.toLocaleString()} บาท</span>`],['กำหนดส่ง',fd(o.du)],['เร่งด่วน',o.urgent?'<span style="color:#dc2626;font-weight:800">⚡ ใช่</span>':'—']];document.getElementById('dBody').innerHTML=rows.map(([k,v])=>`<div class="dr"><span class="drk">${k}</span><span class="drv">${v||'—'}</span></div>`).join('');document.getElementById('detModal').classList.add('open');}
+
+async function sv(){
+  if(!canEdit())return;
+  const g=id=>document.getElementById(id)?.value?.trim()||'';
+  const gc=id=>document.getElementById(id)?.checked||false;
+  const id=g('f_id'),cu=g('f_cu');
+  if(!id||!cu){alert('กรุณากรอกรหัสออเดอร์และชื่อลูกค้า');return;}
+  const btn=document.getElementById('btnSave');
+  btn.textContent='⏳ กำลังบันทึก...';btn.disabled=true;
+  const o={id,rd:g('f_rd')||null,ag:g('f_ag'),cu,br:g('f_br'),pv:g('f_pv'),pr:g('f_pr'),co:g('f_co'),fb:g('f_fb'),ls:gc('f_ls'),ss:gc('f_ss'),cl:g('f_cl'),sz:pss(g('f_sz')),pt:g('f_pt'),ps:g('f_ps'),pn:g('f_pn'),gd:g('f_gd'),gp:g('f_gp'),qt:parseInt(document.getElementById('f_qt').value)||0,px:parseInt(document.getElementById('f_px').value)||0,du:g('f_du')||null,st:g('f_st'),urgent:gc('f_urgent')};
+  const ok=await saveToSupabase(o);
+  btn.textContent='💾 บันทึก';btn.disabled=false;
+  if(ok){cm();await loadOrders();}
+}
+
+async function do2(i){
+  if(!canEdit()){alert('กรุณาล็อกอินก่อน');return;}
+  if(!confirm(`ลบออเดอร์ ${O[i].id}?`))return;
+  const ok=await deleteFromSupabase(O[i].id);
+  if(ok)await loadOrders();
+}
+
+function vo(i){
+  const o=O[i];
+  document.getElementById('dTitle').textContent=o.id+(o.urgent?' ⚡':'')+' — '+o.cu;
+  const rows=[['วันที่รับงาน',fd(o.rd)],['ตัวแทน',o.ag],['ลูกค้า',o.cu],['แบรนด์',o.br],['จังหวัด',o.pv],['สถานะ',`<span class="sb s-${o.st}">${o.st}</span>${o.urgent?'<span class="urgent-badge" style="margin-left:6px">⚡ เร่งด่วน</span>':''}`],['สินค้า',o.pr],['สี',o.co],['ชนิดผ้า',o.fb],['คอเสื้อ',o.cl||'—'],['ไซส์เสื้อ',s2s(o.sz)||'—'],['มีแขนยาว',o.ls?'✓ มี':'—'],['มีไซส์พิเศษ',o.ss?'★ มี':'—'],['กางเกง',o.pt||'—'],['ไซส์พิเศษกางเกง',o.ps],['เครื่องพิมพ์',o.pn||'—'],['กราฟฟิกออกแบบ',o.gd||'—'],['กราฟฟิกวางผลิต',o.gp||'—'],['จำนวนรวม',(o.qt||0).toLocaleString()+' ตัว'],['ราคา',`<span style="color:#dc2626;font-weight:800">${(o.px||0).toLocaleString()} บาท</span>`],['กำหนดส่ง',fd(o.du)],['เร่งด่วน',o.urgent?'<span style="color:#dc2626;font-weight:800">⚡ ใช่</span>':'—']];
+  document.getElementById('dBody').innerHTML=rows.map(([k,v])=>`<div class="dr"><span class="drk">${k}</span><span class="drv">${v||'—'}</span></div>`).join('');
+  document.getElementById('detModal').classList.add('open');
+}
+
 document.getElementById('addModal').addEventListener('click',e=>{if(e.target===e.currentTarget)cm();});
 document.getElementById('detModal').addEventListener('click',e=>{if(e.target===e.currentTarget)document.getElementById('detModal').classList.remove('open');});
 function uc(){const n=new Date();const m=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];const h=String(n.getHours()).padStart(2,'0'),mi=String(n.getMinutes()).padStart(2,'0'),s=String(n.getSeconds()).padStart(2,'0');document.getElementById('clock').textContent=`${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()+543} ${h}:${mi}:${s}`;}
 uc();setInterval(uc,1000);
 </script>
+</body>
+</html>
