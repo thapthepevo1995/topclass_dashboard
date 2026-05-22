@@ -150,6 +150,7 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+.price-locked{color:#94a3b8;letter-spacing:2px;font-size:13px;}
 /* ========== RESPONSIVE MEDIA QUERIES ========== */
 
 /* Tablet: max 1024px */
@@ -511,7 +512,7 @@ function updateSummary(filtered){
   document.getElementById('sumMonth').textContent=MFULL[parseInt(mo)];
   document.getElementById('sumOrders').textContent=filtered.length.toLocaleString();
   document.getElementById('sumQty').textContent=filtered.reduce((a,o)=>a+(o.qt||0),0).toLocaleString();
-  document.getElementById('sumPrice').textContent=filtered.reduce((a,o)=>a+(o.px||0),0).toLocaleString()+' ฿';
+  document.getElementById('sumPrice').textContent= CU!==null ? filtered.reduce((a,o)=>a+(o.px||0),0).toLocaleString()+' ฿' : '••••••';
   document.getElementById('sumUrgent').textContent=filtered.filter(o=>o.urgent).length.toLocaleString();
 }
 
@@ -554,7 +555,7 @@ function render(){
       <td style="font-size:11px;color:#7c3aed;font-weight:700">${o.gd||'—'}</td>
       <td style="font-size:11px;color:#0f766e;font-weight:700">${o.gp||'—'}</td>
       <td style="font-weight:800;color:#1a6fd4">${(o.qt||0).toLocaleString()}</td>
-      <td style="font-weight:800;color:#dc2626">${(o.px||0).toLocaleString()}</td>
+      <td style="font-weight:800;color:#dc2626">${CU!==null?(o.px||0).toLocaleString()+"":"🔒 ••••••"}</td>
       <td style="white-space:nowrap;font-size:11px;color:#d97706;font-weight:700">${fd(o.du)}</td>
       <td><span class="sb s-${o.st}">${o.st}</span>${urgBadge}</td>
       <td><div class="acts">
@@ -614,7 +615,7 @@ async function do2(i){
 function vo(i){
   const o=O[i];
   document.getElementById('dTitle').textContent=o.id+(o.urgent?' ⚡':'')+' — '+o.cu;
-  const rows=[['วันที่รับงาน',fd(o.rd)],['ตัวแทน',o.ag],['ลูกค้า',o.cu],['แบรนด์',o.br],['จังหวัด',o.pv],['สถานะ',`<span class="sb s-${o.st}">${o.st}</span>${o.urgent?'<span class="urgent-badge" style="margin-left:6px">⚡ เร่งด่วน</span>':''}`],['สินค้า',o.pr],['สี',o.co],['ชนิดผ้า',o.fb],['คอเสื้อ',o.cl||'—'],['ไซส์เสื้อ',s2s(o.sz)||'—'],['มีแขนยาว',o.ls?'✓ มี':'—'],['มีไซส์พิเศษ',o.ss?'★ มี':'—'],['กางเกง',o.pt||'—'],['ไซส์พิเศษกางเกง',o.ps],['เครื่องพิมพ์',o.pn||'—'],['กราฟฟิกออกแบบ',o.gd||'—'],['กราฟฟิกวางผลิต',o.gp||'—'],['จำนวนรวม',(o.qt||0).toLocaleString()+' ตัว'],['ราคา',`<span style="color:#dc2626;font-weight:800">${(o.px||0).toLocaleString()} บาท</span>`],['กำหนดส่ง',fd(o.du)],['เร่งด่วน',o.urgent?'<span style="color:#dc2626;font-weight:800">⚡ ใช่</span>':'—']];
+  const rows=[['วันที่รับงาน',fd(o.rd)],['ตัวแทน',o.ag],['ลูกค้า',o.cu],['แบรนด์',o.br],['จังหวัด',o.pv],['สถานะ',`<span class="sb s-${o.st}">${o.st}</span>${o.urgent?'<span class="urgent-badge" style="margin-left:6px">⚡ เร่งด่วน</span>':''}`],['สินค้า',o.pr],['สี',o.co],['ชนิดผ้า',o.fb],['คอเสื้อ',o.cl||'—'],['ไซส์เสื้อ',s2s(o.sz)||'—'],['มีแขนยาว',o.ls?'✓ มี':'—'],['มีไซส์พิเศษ',o.ss?'★ มี':'—'],['กางเกง',o.pt||'—'],['ไซส์พิเศษกางเกง',o.ps],['เครื่องพิมพ์',o.pn||'—'],['กราฟฟิกออกแบบ',o.gd||'—'],['กราฟฟิกวางผลิต',o.gp||'—'],['จำนวนรวม',(o.qt||0).toLocaleString()+' ตัว'],['ราคา', CU!==null?`<span style="color:#dc2626;font-weight:800">${(o.px||0).toLocaleString()} บาท</span>`:'<span style="color:#94a3b8;letter-spacing:2px">🔒 ต้องล็อกอินเพื่อดูราคา</span>'],['กำหนดส่ง',fd(o.du)],['เร่งด่วน',o.urgent?'<span style="color:#dc2626;font-weight:800">⚡ ใช่</span>':'—']];
   document.getElementById('dBody').innerHTML=rows.map(([k,v])=>`<div class="dr"><span class="drk">${k}</span><span class="drv">${v||'—'}</span></div>`).join('');
   document.getElementById('detModal').classList.add('open');
 }
