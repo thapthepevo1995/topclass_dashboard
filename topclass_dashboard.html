@@ -73,7 +73,7 @@ body{font-family:'Sarabun',sans-serif;background:#f0f6ff;min-height:100vh;}
 .thead-row{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-bottom:1.5px solid var(--border);background:var(--bg3);}
 .ttitle{font-size:14px;font-weight:800;color:var(--blue2);}
 .tcount{font-size:12px;color:var(--text3);font-weight:600;}
-.tscroll{overflow-x:auto;}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 table{width:100%;border-collapse:collapse;min-width:1450px;}
 th{padding:10px 11px;text-align:left;font-size:11px;color:var(--blue2);font-weight:700;border-bottom:1.5px solid var(--border);background:#f8fbff;white-space:nowrap;}
 td{padding:10px 11px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text);}
@@ -149,6 +149,110 @@ tr.urgent-row:hover td{background:#fee2e2 !important;}
 .loading{display:flex;align-items:center;justify-content:center;padding:40px;gap:12px;color:var(--text3);font-size:14px;}
 .spinner{width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
+
+/* ========== RESPONSIVE MEDIA QUERIES ========== */
+
+/* Tablet: max 1024px */
+@media (max-width:1024px){
+  .stats{grid-template-columns:repeat(5,1fr);}
+  .topbar{flex-direction:column;align-items:flex-start;}
+  .hright{width:100%;justify-content:flex-start;}
+  .fr3{grid-template-columns:1fr 1fr;}
+  table{min-width:900px;}
+}
+
+/* Mobile Large: max 768px */
+@media (max-width:768px){
+  .db{padding:10px;}
+  .topbar{padding:10px 12px;gap:8px;}
+  .title-block h1{font-size:14px;}
+  .title-block p{font-size:10px;}
+  .logo-icon-img{width:36px;height:36px;}
+  .dt-chip{font-size:10px;padding:5px 10px;}
+  .btn-new{font-size:12px;padding:7px 12px;}
+  .btn-logout{font-size:11px;padding:6px 10px;}
+  .stats{grid-template-columns:repeat(3,1fr);gap:6px;}
+  .snum{font-size:18px;}
+  .slabel{font-size:8px;}
+  .toolbar{padding:10px 12px;gap:6px;}
+  .sbox{min-width:120px;font-size:11px;}
+  .selbox{font-size:11px;padding:7px 8px;}
+  .thead-row{padding:10px 14px;}
+  .ttitle{font-size:13px;}
+  table{min-width:800px;}
+  th{padding:8px 10px;font-size:10px;}
+  td{padding:8px 10px;font-size:11px;}
+  .pgn{padding:10px 14px;flex-direction:column;gap:8px;}
+  .summary-bar{padding:10px 14px;gap:10px;}
+  .sum-val{font-size:16px;}
+  .sum-label{font-size:10px;}
+  .sum-divider{display:none;}
+  .mbox{padding:18px;width:95vw;}
+  .dbox{padding:18px;width:95vw;}
+  .fr2{grid-template-columns:1fr;}
+  .fr3{grid-template-columns:1fr;}
+  .msec{margin:12px 0 8px;}
+  .dgrid{grid-template-columns:1fr;}
+  .dr{border-right:none !important;}
+  .ro-banner{font-size:11px;padding:8px 12px;}
+}
+
+/* Mobile Small: max 480px */
+@media (max-width:480px){
+  .db{padding:8px;}
+  .topbar{padding:8px 10px;}
+  .title-block h1{font-size:13px;}
+  .hright{gap:6px;}
+  .btn-new{font-size:11px;padding:6px 10px;}
+  .btn-logout{font-size:10px;padding:5px 8px;}
+  .dt-chip{display:none;}
+  .stats{grid-template-columns:repeat(3,1fr);gap:5px;}
+  .scard{padding:8px;}
+  .snum{font-size:15px;}
+  .slabel{font-size:7px;}
+  .sbar{margin-top:5px;}
+  .toolbar{gap:5px;}
+  .sbox{font-size:11px;padding:7px 10px;}
+  .selbox{font-size:11px;padding:7px 8px;}
+  table{min-width:700px;}
+  th{font-size:10px;padding:7px 8px;}
+  td{font-size:11px;padding:7px 8px;}
+  .oid{font-size:10px;}
+  .cname{font-size:11px;}
+  .btag{font-size:8px;}
+  .sztag{font-size:8px;}
+  .sb{font-size:9px;padding:2px 8px;}
+  .urgent-badge{font-size:8px;padding:2px 5px;}
+  .ab{width:24px;height:24px;font-size:11px;}
+  .pb{width:26px;height:26px;font-size:11px;}
+  .summary-bar{flex-direction:column;align-items:flex-start;gap:8px;}
+  .sum-block{flex-direction:row;gap:8px;align-items:center;}
+  .sum-val{font-size:18px;}
+  .mbox{padding:14px;border-radius:12px;}
+  .dbox{padding:14px;border-radius:12px;}
+  .login-card{padding:24px;}
+  .login-icon,.logo-img{width:44px;height:44px;}
+  .login-title{font-size:15px;}
+  .login-sub{font-size:11px;}
+  .lfi{padding:9px 12px;font-size:12px;}
+  .btn-login{padding:11px;font-size:13px;}
+  .guest-btn{padding:9px;font-size:12px;}
+  .user-badge{padding:5px 8px;}
+  .uname{font-size:11px;}
+  .urole{font-size:9px;}
+  .udot{width:7px;height:7px;}
+}
+
+/* Very Small: max 360px */
+@media (max-width:360px){
+  .stats{grid-template-columns:repeat(3,1fr);}
+  .scard{padding:6px;}
+  .snum{font-size:14px;}
+  .slabel{font-size:7px;}
+  .btn-new span{display:none;}
+  table{min-width:600px;}
+  .hright{flex-wrap:wrap;}
+}
 </style>
 </head>
 <body>
