@@ -547,7 +547,13 @@ function render(){
     <th>รวม</th><th>ราคา (บาท)</th><th>กำหนดส่ง</th><th>สถานะ</th><th>จัดการ</th>
   </tr></thead><tbody>${it.map(o=>{
     const ri=O.indexOf(o);
-    const pd=o.pt?`<div style="font-size:10px;color:#3b5998">${o.pt}</div><div style="font-size:9px;color:${o.ps==='มี'?'#16a34a':'#6b7eb8'};font-weight:700">${o.ps==='มี'?'★ พิเศษ':'—'}</div>`:'<span style="color:#6b7eb8">—</span>';
+    const pd=(()=>{
+      if(!o.pt)return'<span style="color:#6b7eb8">—</span>';
+      const ptags=o.pt.split(',').map(s=>s.trim()).filter(Boolean)
+        .map(s=>`<span class="sztag">${s}</span>`).join('');
+      const pspec=o.ps==='มี'?`<div style="font-size:9px;color:#16a34a;font-weight:700;margin-top:3px">★ พิเศษ</div>`:'';
+      return`<div class="sztags">${ptags}</div>${pspec}`;
+    })();
     const dis=ed?'':'disabled';
     const urgBadge=o.urgent?'<span class="urgent-badge">⚡ เร่งด่วน</span>':'';
     const rowCls=o.urgent?' class="urgent-row"':'';
